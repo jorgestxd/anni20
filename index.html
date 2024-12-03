@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>¡Feliz Cumpleaños!</title>
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body>
+    <div class="hearts" id="hearts"></div>
+    <div class="container">
+      <h1>🎂 ¡Feliz Cumpleaños! 🎉</h1>
+      <div>
+        <button class="birthday-button" onclick="showMessage('¡Que todos tus deseos se hagan realidad! 🌟')">
+          Mensaje Especial ✨
+        </button>
+        <button class="birthday-button" onclick="showMessage('¡Que este día esté lleno de alegría y amor! 💖')">
+          Deseos de Amor 💝
+        </button>
+        <button class="birthday-button" onclick="showMessage('¡Que cumplas muchos años más! 🎈')">
+          Buenos Deseos 🎀
+        </button>
+      </div>
+      <div class="photo-frame">
+        <div class="yape.jpeg" id="yape.jpeg">
+          Arrastra y suelta tu foto aquí 📸
+        </div>
+      </div>
+    </div>
+    <script>
+      function showMessage(message) {
+        alert(message);
+      }
+
+      function createHeart() {
+        const heart = document.createElement('div');
+        heart.className = 'heart';
+        heart.innerHTML = '💗';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = Math.random() * 3 + 3 + 's';
+        document.getElementById('hearts').appendChild(heart);
+        setTimeout(() => {
+          heart.remove();
+        }, 6000);
+      }
+
+      setInterval(createHeart, 300);
+
+      // Manejo de arrastrar y soltar imagen
+      const photoSpace = document.getElementById('photo-space');
+
+      photoSpace.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        photoSpace.style.backgroundColor = '#ffe0f0';
+      });
+
+      photoSpace.addEventListener('dragleave', () => {
+        photoSpace.style.backgroundColor = '#ffebf5';
+      });
+
+      photoSpace.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const file = e.dataTransfer.files[0];
+        if (file && file.type.startsWith('image/')) {
+          const reader = new FileReader();
+          reader.onload = (e) => {
+            photoSpace.innerHTML = `<img src="${e.target.result}" style="max-width: 100%; max-height: 100%; border-radius: 5px;">`;
+          };
+          reader.readAsDataURL(file);
+        }
+        photoSpace.style.backgroundColor = '#ffebf5';
+      });
+    </script>
+  </body>
+</html>
